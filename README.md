@@ -143,8 +143,13 @@ Unity 씬은 다음과 같이 구성되어 있습니다.
 
 ---
 
-## 🛠 사용 기술 스택
+## 사용 기술 스택
 
 - Engine : Unity [6000.0.39f1]
 - Language : C#
-Footer
+
+---
+
+## 플레이 영상
+
+- https://youtu.be/YR4syMlNx1I
