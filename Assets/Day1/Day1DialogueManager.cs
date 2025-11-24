@@ -4,33 +4,31 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-// Day1: 컷신에서 고양이와의 첫 상호작용과 선택지를 처리하는 클래스
 public class Day1DialogueManager : MonoBehaviour
 {
-    public TextMeshProUGUI dialogText;           // 대사를 출력할 텍스트 필드
-    public GameObject choose1Button;             // 선택지 1 버튼
-    public GameObject choose2Button;             // 선택지 2 버튼
-    public GameObject choose3Button;             // 선택지 3 버튼
+    public TextMeshProUGUI dialogText;
+    public GameObject choose1Button;
+    public GameObject choose2Button;
+    public GameObject choose3Button;
+    public TextMeshProUGUI choose1Text;
+    public TextMeshProUGUI choose2Text;
+    public TextMeshProUGUI choose3Text;
 
-    public TextMeshProUGUI choose1Text;          // 선택지 1 텍스트
-    public TextMeshProUGUI choose2Text;          // 선택지 2 텍스트
-    public TextMeshProUGUI choose3Text;          // 선택지 3 텍스트
+    private int dialogueIndex = 0;
 
-    private int dialogueIndex = 0;               // 현재 대사 인덱스
     private string[] initialDialogues = new string[] {
         "이 아이... 아직도 날 경계하는 걸까?",
         "어떻게 다가가야... 부담스럽지 않을까?"
     };
 
-    private string[] resultDialogues = null;     // 선택 결과에 따른 대사들
-    private int resultIndex = 0;                 // 선택 결과 대사 인덱스
+    private string[] resultDialogues = null;
+    private int resultIndex = 0;
 
-    private bool awaitingChoice = false;         // 선택지를 기다리는 상태인지
-    private bool showingResult = false;          // 선택 결과 대사를 출력 중인지
+    private bool awaitingChoice = false;
+    private bool showingResult = false;
 
     void Start()
     {
-        // 처음에 버튼은 숨기고, 대사는 비워둠
         choose1Button.SetActive(false);
         choose2Button.SetActive(false);
         choose3Button.SetActive(false);
@@ -38,22 +36,20 @@ public class Day1DialogueManager : MonoBehaviour
         ShowNextDialogue();
     }
 
-    // 대사창 클릭 시 호출되는 함수
     public void OnDialogBarClicked()
     {
-        if (awaitingChoice) return; // 선택 대기 중이면 무시
+        if (awaitingChoice) return;
 
         if (showingResult)
         {
-            ShowNextResult();       // 선택 결과 대사 출력 중이면 그걸 계속 출력
+            ShowNextResult();
         }
         else
         {
-            ShowNextDialogue();     // 아니면 일반 대사 진행
+            ShowNextDialogue();
         }
     }
 
-    // 다음 기본 대사 출력
     void ShowNextDialogue()
     {
         if (dialogueIndex < initialDialogues.Length)
@@ -63,12 +59,11 @@ public class Day1DialogueManager : MonoBehaviour
         }
         else
         {
-            ShowChoices();         // 기본 대사 끝나면 선택지 표시
+            ShowChoices();
             awaitingChoice = true;
         }
     }
 
-    // 선택지 버튼 및 텍스트 표시
     void ShowChoices()
     {
         choose1Button.SetActive(true);
@@ -80,7 +75,6 @@ public class Day1DialogueManager : MonoBehaviour
         choose3Text.text = "그냥 혼자 있게 둔다";
     }
 
-    // 선택지 1: 호감도 +20
     public void OnChoose1()
     {
         PlayerPrefs.SetInt("affection", PlayerPrefs.GetInt("affection", 0) + 20);
@@ -91,7 +85,6 @@ public class Day1DialogueManager : MonoBehaviour
         });
     }
 
-    // 선택지 2: 호감도 -20
     public void OnChoose2()
     {
         PlayerPrefs.SetInt("affection", Mathf.Max(0, PlayerPrefs.GetInt("affection", 0) - 20));
@@ -102,7 +95,6 @@ public class Day1DialogueManager : MonoBehaviour
         });
     }
 
-    // 선택지 3: 호감도 변화 없음
     public void OnChoose3()
     {
         StartResult(new string[] {
@@ -112,7 +104,6 @@ public class Day1DialogueManager : MonoBehaviour
         });
     }
 
-    // 선택 결과 출력 시작
     void StartResult(string[] lines)
     {
         choose1Button.SetActive(false);
@@ -126,7 +117,6 @@ public class Day1DialogueManager : MonoBehaviour
         ShowNextResult();
     }
 
-    // 선택 결과 대사를 하나씩 출력
     void ShowNextResult()
     {
         if (resultDialogues != null && resultIndex < resultDialogues.Length)
@@ -136,7 +126,6 @@ public class Day1DialogueManager : MonoBehaviour
         }
         else
         {
-            // 결과 출력 완료 -> MainScene으로 이동
             showingResult = false;
             PlayerPrefs.Save();
             SceneManager.LoadScene("MainScene");

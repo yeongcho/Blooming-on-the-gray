@@ -3,20 +3,16 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-// 해피엔딩 대사와 배경 전환을 관리하는 스크립트
 public class HappyEndingManager : MonoBehaviour
 {
-    public TextMeshProUGUI dialogText;  // 대사 텍스트 출력용 UI
-
-    // 배경 이미지 출력을 위한 SpriteRenderer와 이미지들
+    public TextMeshProUGUI dialogText;
     public SpriteRenderer backgroundRenderer;
-    public Sprite initialBackground;     // 초기 회색 배경 (Rain_Gray)
-    public Sprite happyBackground;       // 따뜻해진 배경 (Happy_Ending_Background)
-    public Sprite trustBackground;       // 고양이가 신뢰를 보인 배경 (Cat_Trust_Background)
+    public Sprite initialBackground;
+    public Sprite happyBackground;
+    public Sprite trustBackground;
 
-    private int dialogueIndex = 0;       // 현재 대사 인덱스
+    private int dialogueIndex = 0;
 
-    // 해피엔딩에서 순차적으로 보여줄 대사들
     private string[] dialogues = new string[]
     {
         "처음엔... 모든 게 흐렸어.",
@@ -33,30 +29,26 @@ public class HappyEndingManager : MonoBehaviour
 
     void Start()
     {
-        dialogText.text = "";                           // 초기 텍스트 비우기
-        backgroundRenderer.sprite = initialBackground;  // 첫 배경 설정
-        ShowNextLine();                                 // 첫 대사 출력
+        dialogText.text = "";
+        backgroundRenderer.sprite = initialBackground;
+        ShowNextLine();
     }
 
-    // 클릭 시 다음 대사 출력
     public void OnDialogClicked()
     {
         ShowNextLine();
     }
 
-    // 다음 대사를 출력하고, 타이밍에 맞춰 배경 변경
     void ShowNextLine()
     {
         if (dialogueIndex < dialogues.Length)
         {
             dialogText.text = dialogues[dialogueIndex];
 
-            // 5번째 대사 출력 시 배경을 따뜻한 이미지로 교체
             if (dialogueIndex == 4)
             {
                 backgroundRenderer.sprite = happyBackground;
             }
-            // 7번째 대사 출력 시 배경을 신뢰 표현 이미지로 교체
             else if (dialogueIndex == 6)
             {
                 backgroundRenderer.sprite = trustBackground;
@@ -66,18 +58,15 @@ public class HappyEndingManager : MonoBehaviour
         }
         else
         {
-            // 마지막 대사 후 타이틀 씬으로 이동
             StartCoroutine(GoToTitleScene());
         }
     }
 
-    // 1.5초 후 타이틀 씬으로 전환
     IEnumerator GoToTitleScene()
     {
-        PlayerPrefs.DeleteAll(); // 저장된 모든 정보 초기화 (호감도, 배고픔, 코인 등)
+        PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
-
-        yield return new WaitForSeconds(1.5f); // 약간의 여운 시간
+        yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene("TitleScene");
     }
 }

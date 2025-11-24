@@ -4,14 +4,11 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-// Normal Ending 씬에서 대사를 순차적으로 출력하고, 종료 시 TitleScene으로 전환하는 스크립트
 public class NormalEndingManager : MonoBehaviour
 {
-    public TextMeshProUGUI dialogText; // UI에 표시될 대사 텍스트
+    public TextMeshProUGUI dialogText;
+    private int dialogueIndex = 0;
 
-    private int dialogueIndex = 0;     // 현재 출력 중인 대사 인덱스
-
-    // 출력할 노멀 엔딩 대사 배열
     private string[] dialogues = new string[]
     {
         "오늘도 이 아이는 같은 자리에 앉아 있었다.",
@@ -29,17 +26,15 @@ public class NormalEndingManager : MonoBehaviour
 
     void Start()
     {
-        dialogText.text = "";  // 초기 대사 비우기
-        ShowNextLine();        // 첫 번째 대사 출력
+        dialogText.text = "";
+        ShowNextLine();
     }
 
-    // 클릭 시 다음 대사 출력
     public void OnDialogClicked()
     {
         ShowNextLine();
     }
 
-    // 대사를 순차적으로 출력
     void ShowNextLine()
     {
         if (dialogueIndex < dialogues.Length)
@@ -49,18 +44,15 @@ public class NormalEndingManager : MonoBehaviour
         }
         else
         {
-            // 모든 대사 출력이 끝나면 타이틀 씬으로 전환
             StartCoroutine(GoToTitleScene());
         }
     }
 
-    // 씬 전환 전 약간의 여유를 두고 타이틀 씬으로 이동
     IEnumerator GoToTitleScene()
     {
-        PlayerPrefs.DeleteAll(); // 저장된 모든 정보 초기화 (호감도, 배고픔, 코인 등)
+        PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
-
-        yield return new WaitForSeconds(1.5f);// 약간의 여운 시간
+        yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene("TitleScene");
     }
 }

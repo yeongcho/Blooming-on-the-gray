@@ -4,45 +4,30 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-// Day 4: 고양이와 놀아주기 관련 선택지 처리
 public class Day4DialogueManager : MonoBehaviour
 {
-    // 대화 텍스트 UI
     public TextMeshProUGUI dialogText;
-
-    // 선택지 버튼들
     public GameObject choose1Button;
     public GameObject choose2Button;
     public GameObject choose3Button;
-
-    // 선택지 텍스트들
     public TextMeshProUGUI choose1Text;
     public TextMeshProUGUI choose2Text;
     public TextMeshProUGUI choose3Text;
 
-    // 컷신 대사 인덱스
     private int dialogueIndex = 0;
 
-    // 컷신 대사 배열
     private string[] initialDialogues = new string[] {
         "같이 놀고 싶은데, 계속 등을 돌리네.",
         "내가 뭘 잘못한 걸까?"
     };
 
-    // 선택 결과 대사
     private string[] resultDialogues = null;
     private int resultIndex = 0;
-
-    // 현재 선택 대기 상태 여부
     private bool awaitingChoice = false;
-
-    // 선택 결과 대사 출력 중인지 여부
     private bool showingResult = false;
 
-    // 초기화
     void Start()
     {
-        // 버튼 숨기고 대사 초기화
         choose1Button.SetActive(false);
         choose2Button.SetActive(false);
         choose3Button.SetActive(false);
@@ -50,22 +35,20 @@ public class Day4DialogueManager : MonoBehaviour
         ShowNextDialogue();
     }
 
-    // 대화창 클릭 시 호출되는 함수
     public void OnDialogBarClicked()
     {
         if (awaitingChoice) return;
 
         if (showingResult)
         {
-            ShowNextResult(); // 결과 대사 출력 중이면 계속 출력
+            ShowNextResult();
         }
         else
         {
-            ShowNextDialogue(); // 컷신 대사 진행
+            ShowNextDialogue();
         }
     }
 
-    // 컷신 대사 진행 함수
     void ShowNextDialogue()
     {
         if (dialogueIndex < initialDialogues.Length)
@@ -75,12 +58,11 @@ public class Day4DialogueManager : MonoBehaviour
         }
         else
         {
-            ShowChoices();        // 컷신 끝나면 선택지 표시
+            ShowChoices();
             awaitingChoice = true;
         }
     }
 
-    // 선택지 버튼 및 텍스트 활성화
     void ShowChoices()
     {
         choose1Button.SetActive(true);
@@ -92,7 +74,6 @@ public class Day4DialogueManager : MonoBehaviour
         choose3Text.text = "고양이는 혼자 노는 거 좋아하지 않나?";
     }
 
-    // 선택지 1 클릭 시: 호감도 +20
     public void OnChoose1()
     {
         PlayerPrefs.SetInt("affection", PlayerPrefs.GetInt("affection", 0) + 20);
@@ -104,7 +85,6 @@ public class Day4DialogueManager : MonoBehaviour
         });
     }
 
-    // 선택지 2 클릭 시: 호감도 -20
     public void OnChoose2()
     {
         PlayerPrefs.SetInt("affection", Mathf.Max(0, PlayerPrefs.GetInt("affection", 0) - 20));
@@ -115,7 +95,6 @@ public class Day4DialogueManager : MonoBehaviour
         });
     }
 
-    // 선택지 3 클릭 시: 변화 없음
     public void OnChoose3()
     {
         StartResult(new string[] {
@@ -125,10 +104,8 @@ public class Day4DialogueManager : MonoBehaviour
         });
     }
 
-    // 선택 결과 대사 시작
     void StartResult(string[] lines)
     {
-        // 선택지 버튼 숨김
         choose1Button.SetActive(false);
         choose2Button.SetActive(false);
         choose3Button.SetActive(false);
@@ -140,7 +117,6 @@ public class Day4DialogueManager : MonoBehaviour
         ShowNextResult();
     }
 
-    // 결과 대사 순차 출력
     void ShowNextResult()
     {
         if (resultDialogues != null && resultIndex < resultDialogues.Length)
@@ -150,7 +126,6 @@ public class Day4DialogueManager : MonoBehaviour
         }
         else
         {
-            // 결과 대사 끝 → 메인 씬으로 이동
             showingResult = false;
             PlayerPrefs.Save();
             SceneManager.LoadScene("MainScene");
