@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/TitleScene.unity
+    guid: 3d1a20379af71cb45bd363606403a2d8
+  - enabled: 1
+    path: Assets/Scenes/Day0Scene.unity
+    guid: 93d4f873c5b59c14fa7d4ef43eb37f3d
+  - enabled: 1
+    path: Assets/Scenes/Day1Scene.unity
+    guid: 438a667e998504b479a245a4b9fd7c82
+  - enabled: 1
+    path: Assets/Scenes/Day2Scene.unity
+    guid: affc805d52a543a45bec8e7f2e5495da
+  - enabled: 1
+    path: Assets/Scenes/Day3Scene.unity
+    guid: 64bb8770053756e4f81ec24dff253159
+  - enabled: 1
+    path: Assets/Scenes/Day4Scene.unity
+    guid: 13599d4b19a13a24c8c281c09bd6abc5
+  - enabled: 1
+    path: Assets/Scenes/Day5Scene.unity
+    guid: 96cb98701343b7c4d967764efdc8edb8
+  - enabled: 1
+    path: Assets/Scenes/MainScene.unity
+    guid: 56adf042752f0564ea45d611a594ba98
+  - enabled: 1
+    path: Assets/Scenes/MiniGameScene.unity
+    guid: fdf8151ea90cb474d889d8778fb74947
+  - enabled: 1
+    path: Assets/Scenes/HappyEndingScene.unity
+    guid: bf9ca9aacab79124788caa8c4826b179
+  - enabled: 1
+    path: Assets/Scenes/NormalEndingScene.unity
+    guid: a7a7321131a74664ebf635d380de7da7
+  - enabled: 1
+    path: Assets/Scenes/BadEndingScene.unity
+    guid: 1bf0c56f6528b134fa349c11bfb9040f
+  m_configObjects:
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_UseUCBPForAssetBundles: 0
